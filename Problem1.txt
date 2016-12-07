@@ -8,18 +8,18 @@ CREATE TABLE User(
 
 CREATE TABLE Borrower(
   userId CHAR(16),
-  FOREIGN KEY userId REFERENCES User
+  FOREIGN KEY userId REFERENCES IsA
 );
 
 CREATE TABLE Lender(
   userId CHAR(16),
-  FOREIGN KEY userId REFERENCES User
+  FOREIGN KEY userId REFERENCES IsA
 
 );
 
 CREATE TABLE Intermediary(
   userId CHAR(16),
-  FOREIGN KEY userId REFERENCES User
+  FOREIGN KEY userId REFERENCES IsA
 
 );
 
