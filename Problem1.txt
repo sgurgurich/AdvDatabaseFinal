@@ -1,10 +1,9 @@
 
 
-
-
-
 CREATE TABLE User(
-
+  id CHAR(16) PRIMARY KEY NOT NULL,
+  name CHAR(64),
+  address CHAR(64)
 );
 
 CREATE TABLE Borrower(
@@ -19,26 +18,39 @@ CREATE TABLE Intermediary(
 
 );
 
-CREATE TABLE User(
+CREATE TABLE Loan(
+  date DATE PRIMARY KEY NOT NULL
+);
+
+CREATE TABLE Deadline(
 
 );
 
-CREATE TABLE User(
+CREATE TABLE Repayment(
 
 );
 
-CREATE TABLE User(
+CREATE TABLE LoanRequest(
 
 );
 
-CREATE TABLE User(
+CREATE TABLE Trust(
 
 );
 
-CREATE TABLE User(
+CREATE TABLE Commitment(
 
 );
 
-CREATE TABLE User(
+
+CREATE TABLE IsA(
 
 );
+
+
+
+
+
+
+
+
