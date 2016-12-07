@@ -61,6 +61,11 @@ CREATE TABLE IsA(
 
 );
 
+CREATE TABLE requests(
+  userId CHAR(16),
+  FOREIGN KEY userId REFERENCES Borrower
+);
+
 
 
 
