@@ -1,0 +1,44 @@
+
+
+
+
+
+CREATE TABLE User(
+
+);
+
+CREATE TABLE Borrower(
+
+);
+
+CREATE TABLE Lender(
+
+);
+
+CREATE TABLE Intermediary(
+
+);
+
+CREATE TABLE User(
+
+);
+
+CREATE TABLE User(
+
+);
+
+CREATE TABLE User(
+
+);
+
+CREATE TABLE User(
+
+);
+
+CREATE TABLE User(
+
+);
+
+CREATE TABLE User(
+
+);
