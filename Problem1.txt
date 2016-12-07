@@ -1,4 +1,17 @@
+BEGIN TRANSACTION;
 
+drop TABLE User;
+drop TABLE Borrower;
+drop TABLE Lender;
+drop TABLE Intermediary; 
+drop TABLE Loan;
+drop TABLE Trust;
+drop TABLE Deadline;
+drop TABLE Repayment;
+drop TABLE LoanRequest;
+drop TABLE Commitment;
+drop TABLE IsA;
+drop TABLE requests;
 
 CREATE TABLE User(
   userId CHAR(16) PRIMARY KEY NOT NULL,
@@ -14,7 +27,6 @@ CREATE TABLE Borrower(
 CREATE TABLE Lender(
   userIdLender CHAR(16),
   FOREIGN KEY userId REFERENCES IsA
-
 );
 
 CREATE TABLE Intermediary(
@@ -80,7 +92,7 @@ CREATE TABLE requests(
 
 
 
-
+COMMIT;
 
 
 
