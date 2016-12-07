@@ -7,7 +7,7 @@ CREATE TABLE User(
 );
 
 CREATE TABLE Borrower(
-  userId CHAR(16),
+  userIdBorrower CHAR(16),
   FOREIGN KEY userId REFERENCES IsA
 );
 
@@ -23,12 +23,19 @@ CREATE TABLE Intermediary(
 
 );
 
-CREATE TABLE Loan(
-  date DATE PRIMARY KEY NOT NULL,
-  userId Char(16),
-  date DATE,
-  FOREIGN KEY userId REFERENCES Intermediary
-  FOREIGN KEY date REFERENCES LoanRequest
+CREATE TABLE Loan(TE PRIMARY KEY NOT NULL,
+  deadline DATE,
+  payDate DATE,
+  amount DOUBLE,
+  description CHAR(128),
+  userId CHAR(16),
+  FOREIGN KEY userId REFERENCES requests
+);
+
+CREATE TABLE Trust(
+  userIdBorrower CHAR(16),
+  value INT PRIMARY KEY,
+  FOREIGN KEY userIdBorrower REFERENCES Borrower
 );
 
 CREATE TABLE Deadline(
@@ -43,10 +50,7 @@ CREATE TABLE Repayment(
 );
 
 CREATE TABLE LoanRequest(
-
-);
-
-CREATE TABLE Trust(
+  date DA
 
 );
 
@@ -62,8 +66,8 @@ CREATE TABLE IsA(
 );
 
 CREATE TABLE requests(
-  userId CHAR(16),
-  FOREIGN KEY userId REFERENCES Borrower
+  userIdBorrower CHAR(16),
+  FOREIGN KEY userIdBorrower REFERENCES Borrower
 );
 
 
