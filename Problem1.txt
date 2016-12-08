@@ -14,41 +14,43 @@ drop TABLE IsA;
 drop TABLE requests;
 
 CREATE TABLE User(
-  userId CHAR(16) PRIMARY KEY NOT NULL,
+  userId INT PRIMARY KEY NOT NULL,
   name CHAR(64),
   address CHAR(64)
 );
 
 CREATE TABLE IsA(
-  userId CHAR(16),
+  userId INT,
   FOREIGN KEY (userId) REFERENCES User(userId)
 );
 
 CREATE TABLE Borrower(
-  userIdBorrower CHAR(16) NOT NULL,
+  userIdBorrower INT NOT NULL,
   FOREIGN KEY (userIdBorrower) REFERENCES IsA(userId)
 );
 
 CREATE TABLE Lender(
-  userIdLender CHAR(16),
+  userIdLender INT,
   FOREIGN KEY (userIdLender) REFERENCES IsA(userId)
 );
 
 CREATE TABLE Intermediary(
-  userIdInter CHAR(16),
+  userIdInter INT,
   FOREIGN KEY (userIdInter) REFERENCES IsA(userId)
 );
 
 CREATE TABLE Loan(
   loanDate DATE PRIMARY KEY,
   requestDate DATE,
-  userIdInter CHAR(16),
+  userIdInter INT,
+	userIdBorrower INT.
   FOREIGN KEY (requestDate) REFERENCES LoanRequest(loanDate)
-  FOREIGN KEY (userIdInter) REFERENCES Intermediary(userIdInter)
+  FOREIGN KEY (userIdInter) REFERENCES Intermediary(userIdInter),
+	FOREIGN KEY (userIdBorrower) REFERENCES Borrower(userIdBorrower)
 );
 
 CREATE TABLE Trust(
-  userIdBorrower CHAR(16),
+  userIdBorrower INT,
   value INT PRIMARY KEY,
   FOREIGN KEY (userIdBorrower) REFERENCES Borrower(userIdBorrower)
 );
@@ -64,7 +66,9 @@ CREATE TABLE Repayment(
 	date DATE PRIMARY KEY,
 	amount DOUBLE,
 	loanDate DATE,
-	FOREIGN KEY (loanDate) REFERENCES Loan(loanDate)
+	userIdBorrower INT,
+	FOREIGN KEY (loanDate) REFERENCES Loan(loanDate),
+	FOREIGN KEY (userIdBorrower) REFERENCES Loan(userIdBorrower)
 );
 
 CREATE TABLE LoanRequest(
@@ -73,13 +77,13 @@ CREATE TABLE LoanRequest(
   payDate DATE,
   amount DOUBLE,
   description CHAR(128),
-  userIdBorrower CHAR(16),
+  userIdBorrower INT,
   FOREIGN KEY (userIdBorrower) REFERENCES requests(userIdBorrower)
 );
 
 CREATE TABLE Commitment(
 	amount DOUBLE PRIMARY KEY,
-	userIdLender CHAR(16),
+	userIdLender INT,
   FOREIGN KEY (userIdLender) REFERENCES Lender(userIdLender)
 );
 
@@ -87,17 +91,36 @@ CREATE TABLE Commitment(
 
 CREATE TABLE requests(
   value INT PRIMARY KEY,
-  userIdBorrower CHAR(16),
-  userIdLender CHAR(16),
+  userIdBorrower INT,
+  userIdLender INT,
   FOREIGN KEY (userIdBorrower) REFERENCES Borrower(userIdBorrower),
   FOREIGN KEY (userIdLender) REFERENCES Lender(userIdLender)
 );
 
-INSERT INTO User VALUES('sgurgu', 'Stefan', 'Tanglewood Drive');
-select * from User;
+--------------------------------------------------------------------------------------
+--
+--               SQL PART OF PROBLEM 1
+--
+--------------------------------------------------------------------------------------
 
+select *
+FROM Repayment
+WHERE userIdBorrower=42 AND amount>1000.00;
 
+select address, SUM(amount)
+FROM Repayment
+GROUP BY address; 
+
+select name
+FROM Repayment A
+WHERE 1=(SELECT COUNT(DISTINCT name)
+         FROM Repayment B
+	 WHERE A.address=B.address);
+
+DELETE FROM Repayment A
+WHERE amount=(SELECT SELECT(amount)
+	      FROM Repayment B
+	      WHERE B.userIdBorrower=A.userIdBorrower
+	      AND B.requestDate=A.requestDate);
+	      
 COMMIT;
-
-
-
