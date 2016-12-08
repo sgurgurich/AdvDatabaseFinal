@@ -19,77 +19,82 @@ CREATE TABLE User(
   address CHAR(64)
 );
 
+CREATE TABLE IsA(
+  userId CHAR(16),
+  FOREIGN KEY (userId) REFERENCES User(userId)
+);
+
 CREATE TABLE Borrower(
-  userIdBorrower CHAR(16),
-  FOREIGN KEY userId REFERENCES IsA
+  userIdBorrower CHAR(16) NOT NULL,
+  FOREIGN KEY (userIdBorrower) REFERENCES IsA(userId)
 );
 
 CREATE TABLE Lender(
   userIdLender CHAR(16),
-  FOREIGN KEY userId REFERENCES IsA
+  FOREIGN KEY (userIdLender) REFERENCES IsA(userId)
 );
 
 CREATE TABLE Intermediary(
   userIdInter CHAR(16),
-  FOREIGN KEY userId REFERENCES IsA
+  FOREIGN KEY (userIdInter) REFERENCES IsA(userId)
 );
 
 CREATE TABLE Loan(
   loanDate DATE PRIMARY KEY,
   requestDate DATE,
   userIdInter CHAR(16),
-  FOREIGN KEY requestDate REFERENCES LoanRequest
-  FOREIGN KEY userIdInter REFERENCES Intermediary
+  FOREIGN KEY (requestDate) REFERENCES LoanRequest(loanDate)
+  FOREIGN KEY (userIdInter) REFERENCES Intermediary(userIdInter)
 );
 
 CREATE TABLE Trust(
   userIdBorrower CHAR(16),
   value INT PRIMARY KEY,
-  FOREIGN KEY userIdBorrower REFERENCES Borrower
+  FOREIGN KEY (userIdBorrower) REFERENCES Borrower(userIdBorrower)
 );
 
 CREATE TABLE Deadline(
   deadline DATE,
   finalDate DATE PRIMARY KEY NOT NULL,
-  date DATE,
-  FOREIGN KEY date REFERENCES Loan
+  loanDate DATE,
+  FOREIGN KEY (loanDate) REFERENCES Loan(loanDate)
 );
 
 CREATE TABLE Repayment(
-
+	date DATE PRIMARY KEY,
+	amount DOUBLE,
+	loanDate DATE,
+	FOREIGN KEY (loanDate) REFERENCES Loan(loanDate)
 );
 
 CREATE TABLE LoanRequest(
-  requestDate DATE PRIMARY_KEY,
+  requestDate DATE PRIMARY KEY,
   deadline DATE,
   payDate DATE,
   amount DOUBLE,
   description CHAR(128),
   userIdBorrower CHAR(16),
-  FOREIGN KEY userIdBorrower REFERENCES requests
- 
-
+  FOREIGN KEY (userIdBorrower) REFERENCES requests(userIdBorrower)
 );
 
 CREATE TABLE Commitment(
-
+	amount DOUBLE PRIMARY KEY,
+	userIdLender CHAR(16),
+  FOREIGN KEY (userIdLender) REFERENCES Lender(userIdLender)
 );
 
 
-CREATE TABLE IsA(
-  userId CHAR(16),
-  FOREIGN KEY userId REFERENCES User
-);
 
 CREATE TABLE requests(
   value INT PRIMARY KEY,
   userIdBorrower CHAR(16),
   userIdLender CHAR(16),
-  FOREIGN KEY userIdBorrower REFERENCES Borrower,
-  FOREIGN KEY userIdLender REFERENCES Lender
+  FOREIGN KEY (userIdBorrower) REFERENCES Borrower(userIdBorrower),
+  FOREIGN KEY (userIdLender) REFERENCES Lender(userIdLender)
 );
 
-
+INSERT INTO User VALUES('sgurgu', 'Stefan', 'Tanglewood Drive');
+select * from User;
 
 
 COMMIT;
