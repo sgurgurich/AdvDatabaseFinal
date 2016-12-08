@@ -1,0 +1,32 @@
+#Stefan Gurgurich
+#DBMS Final
+#SQL Part of Question 1
+
+NOTE: This answer uses the given Repayment table
+For statements that match my SQL code from part 1, see Problem1.txt
+
+Repayment(borrower_id,name,address,loanamount,requestdate,repayment_date,repayment_amount)
+
+a)
+select *
+FROM Repayment
+WHERE borrower_id=42 AND loanamount>1000.00;
+
+b)
+select address, SUM(repayment_amount)
+FROM Repayment
+GROUP BY address; 
+
+c)
+select name
+FROM Repayment A
+WHERE 1=(SELECT COUNT(DISTINCT name)
+         FROM Repayment B
+	 WHERE A.address=B.address);
+
+d)
+DELETE FROM Repayment A
+WHERE loanamount=(SELECT SELECT(loanamount)
+	      FROM Repayment B
+	      WHERE B.borrower_id=A.borrower_id
+	      AND B.requestdate=A.requestdate);
