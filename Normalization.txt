@@ -1,0 +1,21 @@
+#Stefan Gurgurich
+#DBMS Final
+#Normalization Question
+
+a) {borrower_id, requestdate, repayment_date}
+
+b) Normalizing based on the relational dependencies:
+
+      borrower_id -> address, name
+      borrower_id, requestdate -> loanamount
+  
+   Therefore, the BCNF would look like this:
+   
+      Repayment1(borrower_id, address, name)
+      Repayment2(borrower_id, requestdate, loanamount)
+      Repayment3(borrower_id, requestdate, repayment_date, repayment_amount)
+      
+      
+      
+      
+      
